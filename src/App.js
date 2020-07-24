@@ -1,7 +1,7 @@
 import React from 'react';
-import Router from './Router';
-import './reset.scss';
-import './global.scss';
 
-const App = () => <Router />;
+function App() {
+  return <pre> Movies App </pre>;
+}
+
 export default App;
