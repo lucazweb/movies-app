@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { useFormik } from 'formik';
 import { Wrapper, SearchBox, SearchField } from './home.styled';
-
 import { MovieList, Form, Input } from '../../components';
+import store from '../../store';
+import { connect } from 'react-redux';
+import { getMovies } from '../../store/movies';
 
-export const Home = () => {
+const HomePage = ({ movies }) => {
   const [formQuery, setFormQuery] = useState(null);
-
   const formik = useFormik({
     initialValues: {
       query: '',
@@ -15,6 +16,8 @@ export const Home = () => {
     onSubmit: (values) => {
       const { query } = values;
       setFormQuery(query);
+      // get movies action
+      store.dispatch(getMovies(query));
     },
   });
 
@@ -57,3 +60,12 @@ export const Home = () => {
     </Grid>
   );
 };
+
+const mapStateToProps = ({ movies }) => {
+  console.log(movies);
+  return {
+    movies,
+  };
+};
+
+export const Home = connect(mapStateToProps)(HomePage);
