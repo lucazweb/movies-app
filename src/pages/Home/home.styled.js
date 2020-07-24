@@ -22,16 +22,27 @@ export const SearchBox = styled.div`
 `;
 
 export const SearchField = styled.div`
+  position: relative;
   width: 70%;
-  input {
+
+  button {
     outline: none;
-    padding: 6px;
-    width: 100%;
-    font-size: 1.2em;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    width: 110px;
     height: 45px;
-    border: 2px solid black;
-    background: #ccc;
+    font-size: 1em;
+    color: #333;
+    background: #dedede;
+    border: none;
     border-radius: 3px;
+    text-transform: uppercase;
+    &:hover {
+      background: #4caf50;
+      color: white;
+    }
   }
 `;
 

@@ -1,3 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
 body {
-  background: #f3f3f3;
+  background: #333;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+span,
+a,
+blockquote,
+strong,
+button {
+  font-family: 'Lato', sans-serif;
 }

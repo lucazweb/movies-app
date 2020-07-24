@@ -3,7 +3,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import { useFormik } from 'formik';
 import { Wrapper, SearchBox, SearchField } from './home.styled';
 
-import { MovieList } from '../../components';
+import { MovieList, Form, Input } from '../../components';
 
 export const Home = () => {
   const [formQuery, setFormQuery] = useState(null);
@@ -19,8 +19,13 @@ export const Home = () => {
   });
 
   const handleChange = (e) => {
-    setFormQuery(e.target.value);
+    // setFormQuery(e.target.value);
     formik.setFieldValue('query', e.target.value);
+  };
+
+  const handleReset = () => {
+    setFormQuery(null);
+    formik.setFieldValue('query', '');
   };
 
   return (
@@ -30,17 +35,19 @@ export const Home = () => {
           <Wrapper>
             <SearchBox>
               <SearchField>
-                <form onSubmit={formik.handleSubmit}>
-                  <input
+                <Form onSubmit={formik.handleSubmit}>
+                  <Input
                     id="query"
                     name="query"
-                    type="search"
+                    type="text"
                     autoComplete="off"
                     onChange={handleChange}
                     value={formik.values.query}
                     placeholder="Search a movie"
                   />
-                </form>
+                  {!formQuery && <button type="submit">Buscar</button>}
+                  {formQuery && <button onClick={handleReset}>limpar</button>}
+                </Form>
               </SearchField>
               <MovieList height={formQuery ? 500 : 0} />
             </SearchBox>
