@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import { useFormik } from 'formik';
 import {
   Wrapper,
   SearchBox,
@@ -8,11 +9,17 @@ import {
 } from './home.styled';
 
 export const Home = () => {
-  const [query, setQuery] = useState(null);
+  const [formQuery, setFormQuery] = useState(null);
 
-  const handleQuery = (e) => {
-    setQuery(e.target.value);
-  };
+  const formik = useFormik({
+    initialValues: {
+      query: '',
+    },
+    onSubmit: (values) => {
+      const { query } = values;
+      setFormQuery(query);
+    },
+  });
 
   return (
     <Grid fluid={true}>
@@ -21,13 +28,19 @@ export const Home = () => {
           <Wrapper>
             <SearchBox>
               <SearchField>
-                <input
-                  type="search"
-                  onChange={handleQuery}
-                  placeholder="Search a movie"
-                />
+                <form onSubmit={formik.handleSubmit}>
+                  <input
+                    id="query"
+                    name="query"
+                    type="search"
+                    autoComplete="off"
+                    onChange={formik.handleChange}
+                    value={formik.values.query}
+                    placeholder="Search a movie"
+                  />
+                </form>
               </SearchField>
-              <MockComponentWrapper height={query ? 500 : 0} />
+              <MockComponentWrapper height={formQuery ? 500 : 0} />
             </SearchBox>
           </Wrapper>
         </Col>
