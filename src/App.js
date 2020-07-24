@@ -1,7 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-function App() {
-  return <pre> Movies App </pre>;
-}
+const App = () => <pre> Movies App </pre>;
 
-export default App;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    state,
+  };
+};
+
+export default connect(mapStateToProps)(App);
