@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { Breakpoint } from '../../config/constants';
 import placeholder from '../../assets/poster_placeholder.png';
 
 const showUp = keyframes`
@@ -103,7 +104,12 @@ export const InfoButton = styled.button`
   outline: none;
   cursor: pointer;
   transition: all ease 0.3s;
+
   &:hover {
     background: #ffc107;
+  }
+
+  @media (max-width: ${Breakpoint.sm}em) {
+    margin-top: 42px;
   }
 `;

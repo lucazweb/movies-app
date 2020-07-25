@@ -4,6 +4,7 @@ import {
   LargePoster,
   Title,
   DetailBox,
+  StyledRow,
   SubTitle,
   Text,
   Button,
@@ -62,19 +63,20 @@ export const DetailPage = ({ match, movie, loading }) => {
     <>
       {movie && (
         <Grid>
-          <Row style={{ marginTop: 32 }}>
-            <Col xs={12}>
+          <StyledRow xs="center">
+            <Col xs={11} md={12}>
               <Button onClick={handleGoBack}>
                 <FaArrowLeft />
               </Button>
               <Title> {movie.Title} </Title>
             </Col>
-          </Row>
-          <Row>
-            <Col xs={12} md={5}>
+          </StyledRow>
+
+          <Row center="xs">
+            <Col xs={11} md={5}>
               <LargePoster image={movie.Poster} />
             </Col>
-            <Col xs={6}>
+            <Col xs={11} md={6}>
               <Row>
                 {handleMovieData(movie, allowed).map((info, index) => (
                   <Col key={index} xs={12} md={6}>
