@@ -16,7 +16,6 @@ export const MovieListWrapper = styled.div`
 
 export const MoviePoster = styled.div`
   position: relative;
-
   cursor: pointer;
   width: 100%;
   height: 360px;
