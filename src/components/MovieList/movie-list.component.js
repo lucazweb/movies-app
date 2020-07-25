@@ -10,11 +10,12 @@ import {
 } from './movie-list.styled';
 import { Row, Col } from 'react-flexbox-grid';
 import { Loading } from '../Loading/loading.component';
+import { Placeholder404 } from '../Placeholder/placeholder.component';
 import { Span, Strong } from '../Typography/typograph.styled';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const MovieListComponent = ({ height, movies, loading }) => {
+const MovieListComponent = ({ height, movies, loading, handleReset }) => {
   const history = useHistory();
 
   const handleDetail = (id) => {
@@ -25,7 +26,7 @@ const MovieListComponent = ({ height, movies, loading }) => {
     <MovieListWrapper height={height}>
       {!loading ? (
         <Row center="xs">
-          {movies.length > 0 &&
+          {movies.length > 0 ? (
             movies.map((movie, index) => (
               <Col key={index} xs={12} md={3}>
                 <MoviePoster image={movie.Poster}>
@@ -49,7 +50,13 @@ const MovieListComponent = ({ height, movies, loading }) => {
                   </MovieInfo>
                 </MoviePoster>
               </Col>
-            ))}
+            ))
+          ) : (
+            <Placeholder404
+              action={handleReset}
+              display={height !== 0 ? true : false}
+            />
+          )}
         </Row>
       ) : (
         <Loading />

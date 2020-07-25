@@ -56,7 +56,10 @@ const HomePage = () => {
                   {formQuery && <button onClick={handleReset}>limpar</button>}
                 </Form>
               </SearchField>
-              <MovieList height={formQuery ? 500 : 0} />
+              <MovieList
+                handleReset={() => handleReset()}
+                height={formQuery ? 500 : 0}
+              />
             </SearchBox>
           </Wrapper>
         </Col>
