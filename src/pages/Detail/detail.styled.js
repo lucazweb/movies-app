@@ -18,7 +18,8 @@ export const SubTitle = styled(H2)`
   font-weight: bold;
   font-size: 0.95em;
   color: #ccc;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
+  color: #ffb200;
 `;
 
 // export const StyledCol = styled(Col)`
@@ -27,10 +28,13 @@ export const SubTitle = styled(H2)`
 
 export const Text = styled.p`
   color: white;
+  font-size: 0.8em;
+  line-height: 1.6em;
 `;
 
 export const DetailBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-bottom: 12px;
 `;

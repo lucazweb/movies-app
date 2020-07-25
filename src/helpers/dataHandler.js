@@ -1,6 +1,6 @@
-export const handleCountryData = (object, exclude) => {
+export const handleMovieData = (object, allowed) => {
   return Object.keys(object).reduce((acc, current) => {
-    if (!exclude.includes(current)) {
+    if (allowed.includes(current)) {
       return [...acc, { key: current, value: object[current] }];
     } else {
       return [...acc];

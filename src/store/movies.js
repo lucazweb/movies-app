@@ -9,6 +9,8 @@ const GET_DETAIL_REQUEST = 'GET_DETAIL_REQUEST';
 const GET_DETAIL_SUCCESS = 'GET_DETAIL_SUCCESS';
 const GET_DETAIL_FAILURE = 'GET_DETAIL_FAILURE';
 
+export const RESET_SEARCH = 'RESET_SEARCH';
+
 export const getMoviesReq = () => ({
   type: GET_MOVIES_REQUEST,
 });
@@ -95,7 +97,11 @@ export default function (state = initialState, action) {
       return { ...state, movies: [...movies] };
 
     case GET_DETAIL_SUCCESS:
-      return state;
+      const movie = action.payload;
+      return { ...state, selected: movie };
+
+    case RESET_SEARCH:
+      return { movies: [], selected: null };
 
     default:
       return state;

@@ -36,23 +36,7 @@ export const MoviePoster = styled.div`
   }
 `;
 
-export const MovieInfo = styled.div`
-  box-sizing: border-box;
-  padding: 12px;
-  animation-name: ${showUp};
-  animation-duration: 0.2s;
-  animation-timing-function: ease;
-  animation-delay: 0s;
-  animation-iteration-count: 1;
-  animation-direction: normal;
-  animation-fill-mode: none;
-  animation-play-state: running;
-
-  position: absolute;
-  display: none;
-  flex-direction: column;
-  width: 300px;
-  height: 360px;
+const MovieGradient = `
   background: rgb(255, 255, 255);
   background: -moz-linear-gradient(
     0deg,
@@ -70,7 +54,25 @@ export const MovieInfo = styled.div`
     rgba(5, 5, 5, 0.8925945378151261) 60%
   );
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#050505",GradientType=1);
+`;
 
+export const MovieInfo = styled.div`
+  box-sizing: border-box;
+  padding: 12px;
+  animation-name: ${showUp};
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: none;
+  animation-play-state: running;
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  width: 300px;
+  height: 360px;
+  ${MovieGradient};
   z-index: 900;
   color: white;
 `;
