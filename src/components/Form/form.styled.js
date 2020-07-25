@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Breakpoint } from '../../config/constants';
 
 export const StyledForm = styled.form``;
 
@@ -15,4 +16,8 @@ export const StyledInput = styled.input`
   padding: 10px 14px;
   color: white;
   letter-spacing: 1px;
+  @media (max-width: ${Breakpoint.sm}em) {
+    font-size: 1em;
+    height: 55px;
+  }
 `;
