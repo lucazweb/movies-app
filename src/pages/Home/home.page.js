@@ -5,6 +5,7 @@ import { Wrapper, SearchBox, SearchField } from './home.styled';
 import { MovieList, Form, Input } from '../../components';
 import { getMovies, RESET_SEARCH } from '../../store/movies';
 import { useDispatch, useSelector } from 'react-redux';
+import { GrFormClose } from 'react-icons/gr';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -57,7 +58,12 @@ const HomePage = () => {
                     placeholder="Search a movie"
                   />
                   {!query && <button type="submit">Buscar</button>}
-                  {query && <button onClick={handleReset}>limpar</button>}
+                  {query && (
+                    <button onClick={handleReset}>
+                      <span>Limpar</span>
+                      <GrFormClose />
+                    </button>
+                  )}
                 </Form>
               </SearchField>
               <MovieList
