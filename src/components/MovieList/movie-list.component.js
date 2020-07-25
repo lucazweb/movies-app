@@ -10,15 +10,23 @@ import {
 } from './movie-list.styled';
 import { Row, Col } from 'react-flexbox-grid';
 import { Loading } from '../Loading/loading.component';
+import { Placeholder404 } from '../Placeholder/placeholder.component';
 import { Span, Strong } from '../Typography/typograph.styled';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const MovieListComponent = ({ height, movies, loading }) => {
+const MovieListComponent = ({ height, movies, loading, handleReset }) => {
+  const history = useHistory();
+
+  const handleDetail = (id) => {
+    history.push(`/movie-detail/${id}`);
+  };
+
   return (
     <MovieListWrapper height={height}>
       {!loading ? (
         <Row center="xs">
-          {movies.length > 0 &&
+          {movies.length > 0 ? (
             movies.map((movie, index) => (
               <Col key={index} xs={12} md={3}>
                 <MoviePoster image={movie.Poster}>
@@ -34,13 +42,21 @@ const MovieListComponent = ({ height, movies, loading }) => {
                         <Strong>Ano</Strong> <Span>{movie.Year}</Span>
                       </ListItem>
                       <ListItem>
-                        <InfoButton> + Info </InfoButton>
+                        <InfoButton onClick={() => handleDetail(movie.imdbID)}>
+                          + Info
+                        </InfoButton>
                       </ListItem>
                     </List>
                   </MovieInfo>
                 </MoviePoster>
               </Col>
-            ))}
+            ))
+          ) : (
+            <Placeholder404
+              action={handleReset}
+              display={height !== 0 ? true : false}
+            />
+          )}
         </Row>
       ) : (
         <Loading />
@@ -49,7 +65,7 @@ const MovieListComponent = ({ height, movies, loading }) => {
   );
 };
 
-const mapStateToProps = ({ movies, ui: { loading } }) => {
+const mapStateToProps = ({ movies: { movies }, ui: { loading } }) => {
   console.log('from component:', movies, loading);
 
   return {
@@ -59,5 +75,3 @@ const mapStateToProps = ({ movies, ui: { loading } }) => {
 };
 
 export const MovieList = connect(mapStateToProps)(MovieListComponent);
-
-// 300 x 460
