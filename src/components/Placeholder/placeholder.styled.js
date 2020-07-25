@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { H2, Span } from '../Typography/typograph.styled';
 import { Breakpoint } from '../../config/constants';
 import placeholderImg from '../../assets/monitor_404.svg';
+import placeholderError from '../../assets/error_placeholder.svg';
 
 export const StyledImg = styled.div`
   width: 300px;
@@ -16,6 +17,10 @@ export const StyledImg = styled.div`
     width: 250px;
     height: 250px;
   }
+`;
+
+export const StyledErrorImg = styled(StyledImg)`
+  background-image: url(${placeholderError});
 `;
 
 export const Text = styled(H2)`
