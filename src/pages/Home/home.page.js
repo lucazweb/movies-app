@@ -1,34 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { useFormik } from 'formik';
 import { Wrapper, SearchBox, SearchField } from './home.styled';
 import { MovieList, Form, Input } from '../../components';
-import store from '../../store';
-import { connect } from 'react-redux';
-import { getMovies } from '../../store/movies';
+import { getMovies, RESET_SEARCH } from '../../store/movies';
+import { useDispatch, useSelector } from 'react-redux';
 
-const HomePage = ({ movies }) => {
-  const [formQuery, setFormQuery] = useState(null);
+const HomePage = () => {
+  const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       query: '',
     },
     onSubmit: (values) => {
       const { query } = values;
-      setFormQuery(query);
-      // get movies action
-      store.dispatch(getMovies(query));
+
+      dispatch(getMovies(query));
     },
   });
 
+  const query = useSelector(({ movies: { query } }) => query);
+
+  useEffect(() => {
+    if (query) {
+      formik.setFieldValue('query', query.query);
+    }
+  }, [query]);
+
   const handleChange = (e) => {
-    // setFormQuery(e.target.value);
     formik.setFieldValue('query', e.target.value);
   };
 
   const handleReset = () => {
-    setFormQuery(null);
     formik.setFieldValue('query', '');
+    dispatch({
+      type: RESET_SEARCH,
+    });
   };
 
   return (
@@ -48,11 +56,14 @@ const HomePage = ({ movies }) => {
                     value={formik.values.query}
                     placeholder="Search a movie"
                   />
-                  {!formQuery && <button type="submit">Buscar</button>}
-                  {formQuery && <button onClick={handleReset}>limpar</button>}
+                  {!query && <button type="submit">Buscar</button>}
+                  {query && <button onClick={handleReset}>limpar</button>}
                 </Form>
               </SearchField>
-              <MovieList height={formQuery ? 500 : 0} />
+              <MovieList
+                handleReset={() => handleReset()}
+                height={query ? 500 : 0}
+              />
             </SearchBox>
           </Wrapper>
         </Col>
@@ -61,11 +72,4 @@ const HomePage = ({ movies }) => {
   );
 };
 
-const mapStateToProps = ({ movies }) => {
-  console.log(movies);
-  return {
-    movies,
-  };
-};
-
-export const Home = connect(mapStateToProps)(HomePage);
+export const Home = HomePage;
