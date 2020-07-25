@@ -1,11 +1,19 @@
 import React, { useEffect } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import { LargePoster, Title, DetailBox, SubTitle, Text } from './detail.styled';
-import { useStore } from 'react-redux';
-import { getMovieDetail } from '../../store/movies';
-import { connect } from 'react-redux';
+import {
+  LargePoster,
+  Title,
+  DetailBox,
+  SubTitle,
+  Text,
+  Button,
+} from './detail.styled';
+import { connect, useStore } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components';
+import { getMovieDetail } from '../../store/movies';
 import { handleMovieData } from '../../helpers/dataHandler';
+import { FaArrowLeft } from 'react-icons/fa';
 
 export const DetailPage = ({ match, movie, loading }) => {
   const {
@@ -13,11 +21,16 @@ export const DetailPage = ({ match, movie, loading }) => {
   } = match;
 
   console.log(movie);
+  const history = useHistory();
   const store = useStore();
 
   useEffect(() => {
     store.dispatch(getMovieDetail(id));
   }, [id, store]);
+
+  const handleGoBack = () => {
+    history.push('/');
+  };
 
   if (loading) {
     return <Loading />;
@@ -51,6 +64,9 @@ export const DetailPage = ({ match, movie, loading }) => {
         <Grid>
           <Row style={{ marginTop: 32 }}>
             <Col xs={12}>
+              <Button onClick={handleGoBack}>
+                <FaArrowLeft />
+              </Button>
               <Title> {movie.Title} </Title>
             </Col>
           </Row>

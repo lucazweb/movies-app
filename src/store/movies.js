@@ -23,6 +23,9 @@ export const getMoviesSuccess = (data) => ({
 export const getMovies = (q) => async (dispatch) => {
   dispatch({
     type: GET_MOVIES_REQUEST,
+    payload: {
+      query: q,
+    },
   });
 
   dispatch({
@@ -81,15 +84,16 @@ export const getMovieDetail = (id) => async (dispatch) => {
 };
 
 const initialState = {
-  movies: [],
+  query: null,
   selected: null,
+  movies: [],
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case GET_MOVIES_REQUEST:
-      // should return loading state
-      return state;
+      const query = action.payload;
+      return { ...state, query };
 
     case GET_MOVIES_SUCCESS:
       console.log(GET_MOVIES_SUCCESS);
@@ -101,7 +105,7 @@ export default function (state = initialState, action) {
       return { ...state, selected: movie };
 
     case RESET_SEARCH:
-      return { movies: [], selected: null };
+      return { movies: [], selected: null, query: null };
 
     default:
       return state;

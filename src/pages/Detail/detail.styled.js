@@ -38,3 +38,19 @@ export const DetailBox = styled.div`
   width: 100%;
   margin-bottom: 12px;
 `;
+
+export const Button = styled.button`
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  margin-bottom: 18px;
+  outline: none;
+  &:hover {
+    background: #ffc107;
+  }
+`;
