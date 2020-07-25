@@ -15,7 +15,7 @@ export const Placeholder404 = ({ display, buttonText, action }) => {
         <StyledImg display={display} />
       </Col>
       <Col xs={12}>
-        <Text>Oups.. Não encontramos o seu filme</Text>
+        <Text>Oups.. não encontramos o seu filme</Text>
       </Col>
       <Col xs={12}>
         <SmallText>Que tal realizar uma nova busca?</SmallText>
