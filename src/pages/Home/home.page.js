@@ -55,7 +55,7 @@ const HomePage = () => {
                     autoComplete="off"
                     onChange={handleChange}
                     value={formik.values.query}
-                    placeholder="Search a movie"
+                    placeholder="Busque um filme.."
                   />
                   {!query && <button type="submit">Buscar</button>}
                   {query && (

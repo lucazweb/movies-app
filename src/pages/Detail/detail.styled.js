@@ -5,7 +5,7 @@ import { Row } from 'react-flexbox-grid';
 
 export const LargePoster = styled(MoviePoster)`
   height: 80vh;
-  cursor: none;
+  cursor: default;
 `;
 
 export const Title = styled(H1)`
@@ -18,6 +18,7 @@ export const Title = styled(H1)`
     font-size: 1.6em;
     line-height: 1em;
     padding-left: 12px;
+    margin: 0px auto 18px auto;
   }
 `;
 
