@@ -10,17 +10,35 @@ import {
 } from './movie-list.styled';
 import { Row, Col } from 'react-flexbox-grid';
 import { Loading } from '../Loading/loading.component';
-import { Placeholder404 } from '../Placeholder/placeholder.component';
+import {
+  Placeholder404,
+  PlaceholderError,
+} from '../Placeholder/placeholder.component';
 import { Span, Strong } from '../Typography/typograph.styled';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const MovieListComponent = ({ height, movies, loading, handleReset }) => {
+const MovieListComponent = ({
+  height,
+  movies,
+  loading,
+  handleReset,
+  error,
+}) => {
   const history = useHistory();
 
   const handleDetail = (id) => {
     history.push(`/movie-detail/${id}`);
   };
+
+  if (error) {
+    return (
+      <PlaceholderError
+        action={handleReset}
+        display={height !== 0 ? true : false}
+      />
+    );
+  }
 
   return (
     <MovieListWrapper height={height}>
@@ -65,12 +83,11 @@ const MovieListComponent = ({ height, movies, loading, handleReset }) => {
   );
 };
 
-const mapStateToProps = ({ movies: { movies }, ui: { loading } }) => {
-  console.log('from component:', movies, loading);
-
+const mapStateToProps = ({ movies: { movies, error }, ui: { loading } }) => {
   return {
     movies,
     loading,
+    error,
   };
 };
 

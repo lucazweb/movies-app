@@ -11,15 +11,6 @@ const GET_DETAIL_FAILURE = 'GET_DETAIL_FAILURE';
 
 export const RESET_SEARCH = 'RESET_SEARCH';
 
-export const getMoviesReq = () => ({
-  type: GET_MOVIES_REQUEST,
-});
-
-export const getMoviesSuccess = (data) => ({
-  type: GET_MOVIES_SUCCESS,
-  payload: data,
-});
-
 export const getMovies = (q) => async (dispatch) => {
   dispatch({
     type: GET_MOVIES_REQUEST,
@@ -33,9 +24,14 @@ export const getMovies = (q) => async (dispatch) => {
   });
 
   try {
-    const {
-      data: { Search: movies },
-    } = await api.get(`/?s=${q}`);
+    const { data } = await api.get(`/?s=${q}`);
+
+    let movies = [];
+
+    if (data.Search) {
+      const { Search } = data;
+      movies = Search;
+    }
 
     dispatch({
       type: GET_MOVIES_SUCCESS,
@@ -46,7 +42,9 @@ export const getMovies = (q) => async (dispatch) => {
       type: DISABLE_LOADING,
     });
   } catch (err) {
-    console.log(err);
+    dispatch({
+      type: GET_MOVIES_FAILURE,
+    });
 
     dispatch({
       type: DISABLE_LOADING,
@@ -65,18 +63,24 @@ export const getMovieDetail = (id) => async (dispatch) => {
 
   try {
     const { data } = await api.get(`/?i=${id}`);
-    // console.log('🔥', data);
+    console.log(data);
 
-    dispatch({
-      type: DISABLE_LOADING,
-    });
+    if (!data.Error) {
+      dispatch({
+        type: GET_DETAIL_SUCCESS,
+        payload: data,
+      });
 
-    dispatch({
-      type: GET_DETAIL_SUCCESS,
-      payload: data,
-    });
+      dispatch({
+        type: DISABLE_LOADING,
+      });
+    } else {
+      throw new Error();
+    }
   } catch (err) {
-    console.log(err);
+    dispatch({
+      type: GET_DETAIL_FAILURE,
+    });
     dispatch({
       type: DISABLE_LOADING,
     });
@@ -86,6 +90,7 @@ export const getMovieDetail = (id) => async (dispatch) => {
 const initialState = {
   query: null,
   selected: null,
+  error: null,
   movies: [],
 };
 
@@ -93,19 +98,22 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case GET_MOVIES_REQUEST:
       const query = action.payload;
-      return { ...state, query };
+      return { ...state, error: null, query };
 
     case GET_MOVIES_SUCCESS:
-      console.log(GET_MOVIES_SUCCESS);
       const movies = action.payload;
-      return { ...state, movies: [...movies] };
+      return { ...state, error: null, movies: [...movies] };
+
+    case GET_MOVIES_FAILURE:
+    case GET_DETAIL_FAILURE:
+      return { ...state, error: 'Algo deu errado' };
 
     case GET_DETAIL_SUCCESS:
       const movie = action.payload;
-      return { ...state, selected: movie };
+      return { ...state, error: null, selected: movie };
 
     case RESET_SEARCH:
-      return { movies: [], selected: null, query: null };
+      return { movies: [], error: null, selected: null, query: null };
 
     default:
       return state;
