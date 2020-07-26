@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { H2, Span } from '../Typography/typograph.styled';
-import { Breakpoint } from '../../config/constants';
+import { Breakpoint, Color } from '../../config/constants';
 import placeholderImg from '../../assets/monitor_404.svg';
 import placeholderError from '../../assets/error_placeholder.svg';
 
@@ -41,27 +41,5 @@ export const SmallText = styled(Span)`
   margin-bottom: 12px;
   @media (max-width: ${Breakpoint.sm}em) {
     font-size: 1em;
-  }
-`;
-
-export const InfoButton = styled.button`
-  box-sizing: border-box;
-  bottom: 16px;
-  border: none;
-  background: #dedede;
-  color: #333;
-  border-radius: 3px;
-  width: 200px;
-  height: 40px;
-  padding: 8px 10px;
-  font-size: 1em;
-  font-weight: bold;
-  outline: none;
-  cursor: pointer;
-  transition: all ease 0.3s;
-  margin-top: 18px;
-  &:hover {
-    background: #4caf50;
-    color: white;
   }
 `;

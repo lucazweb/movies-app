@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Breakpoint } from '../../config/constants';
+import { Breakpoint, Color } from '../../config/constants';
 
 export const Wrapper = styled.div`
   height: 100vh;
@@ -28,42 +28,47 @@ export const SearchField = styled.div`
   @media (max-width: ${Breakpoint.sm}em) {
     width: 100%;
   }
+`;
 
-  button {
-    outline: none;
-    cursor: pointer;
-    position: absolute;
-    right: 10px;
-    top: 8px;
+export const ButtonSearch = styled.button`
+  outline: none;
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  cursor: pointer;
+  height: 45px;
+  font-size: 1em;
+  padding: 6px 12px;
+  color: #333;
+  background: #dedede;
+  border: none;
+  border-radius: 3px;
+  text-transform: uppercase;
 
-    height: 45px;
-    font-size: 1em;
-    padding: 6px 12px;
-    color: #333;
-    background: #dedede;
-    border: none;
-    border-radius: 3px;
-    text-transform: uppercase;
+  svg {
+    display: none;
+  }
 
+  &:hover {
+    background: #4caf50;
+    color: white;
+  }
+
+  @media (max-width: ${Breakpoint.sm}em) {
+    height: 40px;
     svg {
+      display: block;
+      font-size: 1.1em;
+    }
+    span {
       display: none;
     }
+  }
+`;
 
-    &:hover {
-      background: #4caf50;
-      color: white;
-    }
-
-    @media (max-width: ${Breakpoint.sm}em) {
-      height: 40px;
-      svg {
-        display: block;
-        font-size: 1.1em;
-      }
-      span {
-        display: none;
-      }
-    }
+export const ButtonDanger = styled(ButtonSearch)`
+  &:hover {
+    background: ${Color.danger};
   }
 `;
 
