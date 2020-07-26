@@ -17,21 +17,25 @@ export const Placeholder404 = ({ display, buttonText, action }) => {
 
   return (
     <Row center="xs">
-      <Col xs={12}>
-        <StyledImg visible={display} />
-      </Col>
-      <Col xs={12}>
-        <Text>Oups.. não encontramos o seu filme</Text>
-      </Col>
-      <Col xs={12}>
-        <SmallText>Que tal realizar uma nova busca?</SmallText>
-      </Col>
-      {action && (
-        <Col xs={12}>
-          <ActionButton onClick={handleAction}>
-            {buttonText || 'Tentar novamente'}
-          </ActionButton>
-        </Col>
+      {display && (
+        <>
+          <Col xs={12}>
+            <StyledImg visible={display} />
+          </Col>
+          <Col xs={12}>
+            <Text>Oups.. não encontramos o seu filme</Text>
+          </Col>
+          <Col xs={12}>
+            <SmallText>Que tal realizar uma nova busca?</SmallText>
+          </Col>
+          {action && (
+            <Col xs={12}>
+              <ActionButton onClick={handleAction}>
+                {buttonText || 'Tentar novamente'}
+              </ActionButton>
+            </Col>
+          )}
+        </>
       )}
     </Row>
   );
@@ -46,21 +50,25 @@ export const PlaceholderError = ({ display, buttonText, action }) => {
 
   return (
     <Row center="xs">
-      <Col xs={12}>
-        <StyledErrorImg visible={display} />
-      </Col>
-      <Col xs={12}>
-        <Text>Oups.. algo deu errado</Text>
-      </Col>
-      <Col xs={12}>
-        <SmallText>Que tal realizar uma nova busca?</SmallText>
-      </Col>
-      {action && (
-        <Col xs={12}>
-          <ActionButton onClick={handleAction}>
-            {buttonText || 'Tentar novamente'}
-          </ActionButton>
-        </Col>
+      {display && (
+        <>
+          <Col xs={12}>
+            <StyledErrorImg visible={display} />
+          </Col>
+          <Col xs={12}>
+            <Text>Oups.. algo deu errado</Text>
+          </Col>
+          <Col xs={12}>
+            <SmallText>Que tal realizar uma nova busca?</SmallText>
+          </Col>
+          {action && (
+            <Col xs={12}>
+              <ActionButton onClick={handleAction}>
+                {buttonText || 'Tentar novamente'}
+              </ActionButton>
+            </Col>
+          )}
+        </>
       )}
     </Row>
   );
