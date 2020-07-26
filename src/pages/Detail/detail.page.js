@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import {
   LargePoster,
@@ -9,27 +11,34 @@ import {
   Text,
   Button,
 } from './detail.styled';
-import { connect, useStore } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { Loading } from '../../components';
-import { getMovieDetail } from '../../store/movies';
+import { Loading, Placeholder404 } from '../../components';
+import { getMovieDetail, RESET_SEARCH } from '../../store/movies';
 import { handleMovieData } from '../../helpers/dataHandler';
 import { FaArrowLeft } from 'react-icons/fa';
 
-export const DetailPage = ({ match, movie, loading }) => {
+export const DetailPage = ({ match, movie, loading, error }) => {
   const {
     params: { id },
   } = match;
 
-  console.log(movie);
   const history = useHistory();
-  const store = useStore();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    store.dispatch(getMovieDetail(id));
-  }, [id, store]);
+    dispatch(getMovieDetail(id));
+  }, [id, dispatch]);
 
   const handleGoBack = () => {
+    history.push('/');
+  };
+
+  const handleRedirect = () => {
+    // should reset application state
+    dispatch({
+      type: RESET_SEARCH,
+    });
+
     history.push('/');
   };
 
@@ -37,10 +46,11 @@ export const DetailPage = ({ match, movie, loading }) => {
     return <Loading />;
   }
 
-  if (movie) {
-    console.log(handleMovieData(movie, ['Title', 'Ratings']));
+  if (error) {
+    return <Placeholder404 display={true} action={() => handleRedirect()} />;
   }
 
+  // Map visible data to detail info
   const allowed = [
     'Actors',
     'Awards',
@@ -95,11 +105,15 @@ export const DetailPage = ({ match, movie, loading }) => {
   );
 };
 
-const mapStateToProps = ({ movies: { selected: movie }, ui: { loading } }) => {
-  console.log(movie);
+const mapStateToProps = ({
+  movies: { selected: movie, error },
+  ui: { loading },
+}) => {
+  console.log(error);
   return {
     movie,
     loading,
+    error,
   };
 };
 

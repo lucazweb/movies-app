@@ -11,15 +11,6 @@ const GET_DETAIL_FAILURE = 'GET_DETAIL_FAILURE';
 
 export const RESET_SEARCH = 'RESET_SEARCH';
 
-export const getMoviesReq = () => ({
-  type: GET_MOVIES_REQUEST,
-});
-
-export const getMoviesSuccess = (data) => ({
-  type: GET_MOVIES_SUCCESS,
-  payload: data,
-});
-
 export const getMovies = (q) => async (dispatch) => {
   dispatch({
     type: GET_MOVIES_REQUEST,
@@ -72,16 +63,24 @@ export const getMovieDetail = (id) => async (dispatch) => {
 
   try {
     const { data } = await api.get(`/?i=${id}`);
+    console.log(data);
 
-    dispatch({
-      type: DISABLE_LOADING,
-    });
+    if (!data.Error) {
+      dispatch({
+        type: GET_DETAIL_SUCCESS,
+        payload: data,
+      });
 
-    dispatch({
-      type: GET_DETAIL_SUCCESS,
-      payload: data,
-    });
+      dispatch({
+        type: DISABLE_LOADING,
+      });
+    } else {
+      throw new Error();
+    }
   } catch (err) {
+    dispatch({
+      type: GET_DETAIL_FAILURE,
+    });
     dispatch({
       type: DISABLE_LOADING,
     });
@@ -102,12 +101,11 @@ export default function (state = initialState, action) {
       return { ...state, error: null, query };
 
     case GET_MOVIES_SUCCESS:
-      console.log(GET_MOVIES_SUCCESS);
       const movies = action.payload;
       return { ...state, error: null, movies: [...movies] };
 
     case GET_MOVIES_FAILURE:
-      console.log('GET_MOVIES_FAILURE');
+    case GET_DETAIL_FAILURE:
       return { ...state, error: 'Algo deu errado' };
 
     case GET_DETAIL_SUCCESS:

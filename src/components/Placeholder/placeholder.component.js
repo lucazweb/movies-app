@@ -18,7 +18,7 @@ export const Placeholder404 = ({ display, buttonText, action }) => {
   return (
     <Row center="xs">
       <Col xs={12}>
-        <StyledImg display={display} />
+        <StyledImg visible={display} />
       </Col>
       <Col xs={12}>
         <Text>Oups.. não encontramos o seu filme</Text>
@@ -47,7 +47,7 @@ export const PlaceholderError = ({ display, buttonText, action }) => {
   return (
     <Row center="xs">
       <Col xs={12}>
-        <StyledErrorImg display={display} />
+        <StyledErrorImg visible={display} />
       </Col>
       <Col xs={12}>
         <Text>Oups.. algo deu errado</Text>

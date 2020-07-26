@@ -84,8 +84,6 @@ const MovieListComponent = ({
 };
 
 const mapStateToProps = ({ movies: { movies, error }, ui: { loading } }) => {
-  console.log('from component:', movies, loading, error);
-
   return {
     movies,
     loading,
