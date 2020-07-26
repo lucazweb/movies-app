@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Breakpoint } from '../../config/constants';
+import { Breakpoint, Color } from '../../config/constants';
 
 export const StyledForm = styled.form``;
 
@@ -16,6 +16,18 @@ export const StyledInput = styled.input`
   padding: 10px 14px;
   color: white;
   letter-spacing: 1px;
+
+  &.error {
+    border: 1px solid tomato !important;
+    color: tomato !important;
+  }
+
+  &:disabled {
+    color: ${Color.primaryGreen};
+    cursor: not-allowed;
+    border: 1px solid ${Color.primaryGreen};
+  }
+
   @media (max-width: ${Breakpoint.sm}em) {
     font-size: 1em;
     height: 55px;

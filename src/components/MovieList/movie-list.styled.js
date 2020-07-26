@@ -70,7 +70,9 @@ const MovieGradient = `
 
 export const MovieInfo = styled.div`
   box-sizing: border-box;
-  padding: 12px;
+  padding: 16px 12px 12px 12px;
+  top: 0;
+  left: 0;
   ${fadeInAnimation};
   position: absolute;
   display: none;
@@ -86,6 +88,9 @@ export const List = styled.ul``;
 
 export const ListItem = styled.li`
   margin-bottom: 6px;
+  button {
+    margin-top: 18px;
+  }
 `;
 
 export const MovieTitle = styled.h2`

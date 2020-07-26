@@ -46,7 +46,7 @@ export const getMovies = (q, page = 1) => async (dispatch) => {
 
     if (data.Search) {
       const { Search } = data;
-      console.log(Search);
+
       // movies as search results
       movies = Search.slice(0, 6);
 
@@ -54,34 +54,14 @@ export const getMovies = (q, page = 1) => async (dispatch) => {
         // get hold and add to slice of results
         const cached = JSON.parse(localStorage.getItem('mapphold'));
         movies = [...cached.hold, ...Search.slice(0, 2)];
-
-        // const hold = Search.slice(2, Search.length);
-
         handleLocalMovies(movies, Search, 2);
-        // localStorage.setItem(
-        //   'mapphold',
-        //   JSON.stringify({
-        //     movies,
-        //     hold,
-        //   })
-        // );
       } else {
-        // page === 1
-        // movies length more than 6, there more than displayed results, store it.
         if (Search.length > 6) {
           handleLocalMovies(movies, Search, 6);
-          // localStorage.setItem(
-          //   'mapphold',
-          //   JSON.stringify({
-          //     movies,
-          //     hold: Search.slice(6, Search.length),
-          //   })
-          // );
         }
       }
     }
 
-    console.log('🔥', movies);
     dispatch({
       type: GET_MOVIES_SUCCESS,
       payload: movies,
@@ -145,6 +125,7 @@ const initialState = {
   selected: null,
   error: null,
   page: null,
+  searching: false,
   movies: [],
 };
 
@@ -152,7 +133,7 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case GET_MOVIES_REQUEST:
       const { query, page } = action.payload;
-      return { ...state, error: null, query, page };
+      return { ...state, error: null, query, page, searching: true };
 
     case GET_MOVIES_SUCCESS:
       const movies = action.payload;
@@ -168,7 +149,13 @@ export default function (state = initialState, action) {
       return { ...state, error: null, selected: movie };
 
     case RESET_SEARCH:
-      return { movies: [], error: null, selected: null, query: null };
+      return {
+        movies: [],
+        error: null,
+        selected: null,
+        query: null,
+        searching: false,
+      };
 
     default:
       return state;
