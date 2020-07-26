@@ -83,7 +83,7 @@ const MovieListComponent = ({
                           <InfoButton
                             onClick={() => handleDetail(movie.imdbID)}
                           >
-                            + Info
+                            + info
                           </InfoButton>
                         </ListItem>
                       </List>

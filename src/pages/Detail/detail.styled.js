@@ -4,8 +4,9 @@ import { Breakpoint, Color } from '../../config/constants';
 import { Row } from 'react-flexbox-grid';
 
 export const LargePoster = styled(MoviePoster)`
-  height: 80vh;
+  height: 75vh;
   cursor: default;
+  margin-bottom: 0;
 `;
 
 export const Title = styled(H1)`
@@ -45,7 +46,7 @@ export const DetailBox = styled.div`
   text-align: left;
 `;
 
-export const Button = styled.button`
+export const BackButton = styled.button`
   border: none;
   display: flex;
   align-items: center;
@@ -56,8 +57,10 @@ export const Button = styled.button`
   cursor: pointer;
   margin-bottom: 18px;
   outline: none;
+  transition: all ease 0.4s;
   &:hover {
     background: #ffc107;
+    transform: scale(1.2);
   }
 `;
 

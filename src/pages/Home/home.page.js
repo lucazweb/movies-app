@@ -73,7 +73,7 @@ const HomePage = () => {
                     disabled={searching ? 'disabled' : ''}
                     onChange={handleChange}
                     value={formik.values.query}
-                    placeholder="Busque um filme.."
+                    placeholder="Procure seu Filme"
                   />
                   {!query && <ButtonSearch type="submit">Buscar</ButtonSearch>}
                 </Form>

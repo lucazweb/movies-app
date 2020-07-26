@@ -9,7 +9,7 @@ import {
   StyledRow,
   SubTitle,
   Text,
-  Button,
+  BackButton,
 } from './detail.styled';
 import { Loading, Placeholder404 } from '../../components';
 import { getMovieDetail, RESET_SEARCH } from '../../store/movies';
@@ -75,9 +75,9 @@ export const DetailPage = ({ match, movie, loading, error }) => {
         <Grid>
           <StyledRow xs="center">
             <Col xs={11} md={12}>
-              <Button onClick={handleGoBack}>
+              <BackButton onClick={handleGoBack}>
                 <FaArrowLeft />
-              </Button>
+              </BackButton>
               <Title> {movie.Title} </Title>
             </Col>
           </StyledRow>
