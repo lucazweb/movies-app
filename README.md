@@ -2,7 +2,7 @@
 
 ### Link em produção
 
-https://movieshub.surge.sh
+http://movieshub.surge.sh
 
 ### Instalação ⚡️
 
