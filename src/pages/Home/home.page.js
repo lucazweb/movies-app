@@ -8,7 +8,7 @@ import {
   ButtonSearch,
   ButtonDanger,
 } from './home.styled';
-import { MovieList, Form, Input } from '../../components';
+import { Logo, MovieList, Form, Input } from '../../components';
 import { getMovies, RESET_SEARCH } from '../../store/movies';
 import { useDispatch, useSelector } from 'react-redux';
 import { GrFormClose } from 'react-icons/gr';
@@ -52,6 +52,7 @@ const HomePage = () => {
         <Col xs={12}>
           <Wrapper>
             <SearchBox>
+              <Logo />
               <SearchField>
                 <Form onSubmit={formik.handleSubmit}>
                   <Input

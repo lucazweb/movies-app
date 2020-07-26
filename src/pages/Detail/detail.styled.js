@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { H1, H2, MoviePoster } from '../../components';
-import { Breakpoint } from '../../config/constants';
+import { Breakpoint, Color } from '../../config/constants';
 import { Row } from 'react-flexbox-grid';
 
 export const LargePoster = styled(MoviePoster)`
@@ -27,7 +27,8 @@ export const SubTitle = styled(H2)`
   font-size: 0.95em;
   color: #ccc;
   margin-bottom: 4px;
-  color: #ffb200;
+  color: ${Color.highlightText};
+  letter-spacing: 0.05em;
 `;
 
 export const Text = styled.p`

@@ -10,4 +10,6 @@ export const Color = {
   darkGray: '#666666',
   primaryGreen: '#4caf50',
   danger: '#900',
+  highlight: '#f3bb3b',
+  highlightText: '#f3bb3b',
 };

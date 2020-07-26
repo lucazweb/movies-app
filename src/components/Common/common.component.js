@@ -1,11 +1,42 @@
+import React from 'react';
 import styled from 'styled-components';
 import { Breakpoint, Color } from '../../config/constants';
+import { RiMovie2Line } from 'react-icons/ri';
+
+export const LogoWrapper = styled.div`
+  display: flex;
+  width: 70%;
+  justify-content: flex-start;
+  font-size: 2.2em;
+  color: white;
+  margin-bottom: 32px;
+  @media (max-width: ${Breakpoint.sm}em) {
+    width: 100%;
+    font-size: 1.4em;
+    margin-top: 18px;
+    margin-bottom: 18px;
+  }
+  svg {
+    margin-right: 12px;
+  }
+`;
+
+export const Logo = () => {
+  return (
+    <>
+      <LogoWrapper>
+        <RiMovie2Line />
+        <h1 style={{ color: 'white' }}>Movies Hub</h1>
+      </LogoWrapper>
+    </>
+  );
+};
 
 export const InfoButton = styled.button`
   box-sizing: border-box;
   bottom: 16px;
   border: none;
-  background: yellow;
+  background: ${Color.highlight};
   color: #333;
   border-radius: 3px;
   width: 200px;
