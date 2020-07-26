@@ -16,7 +16,8 @@ import {
 } from '../Placeholder/placeholder.component';
 import { Span, Strong } from '../Typography/typograph.styled';
 import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import { getMovies } from '../../store/movies';
 
 const MovieListComponent = ({
   height,
@@ -24,11 +25,20 @@ const MovieListComponent = ({
   loading,
   handleReset,
   error,
+  page,
+  query,
 }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleDetail = (id) => {
     history.push(`/movie-detail/${id}`);
+  };
+
+  const handlePagination = (query, page) => {
+    console.log('load more..');
+    const newPage = page + 1;
+    dispatch(getMovies(query, newPage));
   };
 
   if (error) {
@@ -46,7 +56,7 @@ const MovieListComponent = ({
         <Row center="xs">
           {movies.length > 0 ? (
             movies.map((movie, index) => (
-              <Col key={index} xs={12} md={3}>
+              <Col key={index} xs={12} md={4}>
                 <MoviePoster image={movie.Poster}>
                   <MovieInfo>
                     <List>
@@ -75,6 +85,11 @@ const MovieListComponent = ({
               display={height !== 0 ? true : false}
             />
           )}
+          <Col xs={12}>
+            <button onClick={() => handlePagination(query, page)}>
+              Carregar mais
+            </button>
+          </Col>
         </Row>
       ) : (
         <Loading />
@@ -83,11 +98,17 @@ const MovieListComponent = ({
   );
 };
 
-const mapStateToProps = ({ movies: { movies, error }, ui: { loading } }) => {
+const mapStateToProps = ({
+  movies: { movies, query, error, page },
+  ui: { loading },
+}) => {
+  console.log('PAGE: ', page);
   return {
     movies,
-    loading,
+    query,
     error,
+    page,
+    loading,
   };
 };
 

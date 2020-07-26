@@ -19,7 +19,7 @@ export const MoviePoster = styled.div`
   position: relative;
   cursor: pointer;
   width: 100%;
-  height: 360px;
+  height: 460px;
   background-color: black;
   background-image: url(${({ image }) =>
     image !== 'N/A' ? image : placeholder});
