@@ -15,7 +15,13 @@ import { GrFormClose } from 'react-icons/gr';
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const query = useSelector(({ movies: { query } }) => query);
+  const { query, searching, movies } = useSelector(
+    ({ movies: { query, searching, movies } }) => ({
+      query,
+      searching,
+      movies,
+    })
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -23,6 +29,7 @@ const HomePage = () => {
     },
     onSubmit: (values) => {
       const { query } = values;
+
       if (query) {
         dispatch(getMovies(query));
       }
@@ -46,6 +53,8 @@ const HomePage = () => {
     });
   };
 
+  const searching404 = movies.length === 0 && searching;
+
   return (
     <Grid fluid={true}>
       <Row center="xs">
@@ -56,22 +65,24 @@ const HomePage = () => {
               <SearchField>
                 <Form onSubmit={formik.handleSubmit}>
                   <Input
+                    className={searching404 ? 'error' : ''}
                     id="query"
                     name="query"
                     type="text"
                     autoComplete="off"
+                    disabled={searching ? 'disabled' : ''}
                     onChange={handleChange}
                     value={formik.values.query}
                     placeholder="Busque um filme.."
                   />
                   {!query && <ButtonSearch type="submit">Buscar</ButtonSearch>}
-                  {query && (
-                    <ButtonDanger onClick={handleReset}>
-                      <span>Limpar</span>
-                      <GrFormClose />
-                    </ButtonDanger>
-                  )}
                 </Form>
+                {query && (
+                  <ButtonDanger onClick={handleReset}>
+                    <span>Limpar</span>
+                    <GrFormClose />
+                  </ButtonDanger>
+                )}
               </SearchField>
               <MovieList
                 handleReset={() => handleReset()}

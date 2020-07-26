@@ -119,7 +119,6 @@ const mapStateToProps = ({
   movies: { movies, query, error, page },
   ui: { loading },
 }) => {
-  console.log('PAGE: ', page);
   return {
     movies,
     query,
