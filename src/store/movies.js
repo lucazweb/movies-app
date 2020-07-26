@@ -11,20 +11,22 @@ const GET_DETAIL_FAILURE = 'GET_DETAIL_FAILURE';
 
 export const RESET_SEARCH = 'RESET_SEARCH';
 
-export const getMoviesReq = () => ({
-  type: GET_MOVIES_REQUEST,
-});
+const handleLocalMovies = (movies, fullResults, start) => {
+  localStorage.setItem(
+    'mapphold',
+    JSON.stringify({
+      movies,
+      hold: fullResults.slice(start, fullResults.length),
+    })
+  );
+};
 
-export const getMoviesSuccess = (data) => ({
-  type: GET_MOVIES_SUCCESS,
-  payload: data,
-});
-
-export const getMovies = (q) => async (dispatch) => {
+export const getMovies = (q, page = 1) => async (dispatch) => {
   dispatch({
     type: GET_MOVIES_REQUEST,
     payload: {
       query: q,
+      page,
     },
   });
 
@@ -33,10 +35,53 @@ export const getMovies = (q) => async (dispatch) => {
   });
 
   try {
-    const {
-      data: { Search: movies },
-    } = await api.get(`/?s=${q}`);
+    const { data } = await api.get(`/`, {
+      params: {
+        s: q,
+        page,
+      },
+    });
 
+    let movies = [];
+
+    if (data.Search) {
+      const { Search } = data;
+      console.log(Search);
+      // movies as search results
+      movies = Search.slice(0, 6);
+
+      if (page > 1) {
+        // get hold and add to slice of results
+        const cached = JSON.parse(localStorage.getItem('mapphold'));
+        movies = [...cached.hold, ...Search.slice(0, 2)];
+
+        // const hold = Search.slice(2, Search.length);
+
+        handleLocalMovies(movies, Search, 2);
+        // localStorage.setItem(
+        //   'mapphold',
+        //   JSON.stringify({
+        //     movies,
+        //     hold,
+        //   })
+        // );
+      } else {
+        // page === 1
+        // movies length more than 6, there more than displayed results, store it.
+        if (Search.length > 6) {
+          handleLocalMovies(movies, Search, 6);
+          // localStorage.setItem(
+          //   'mapphold',
+          //   JSON.stringify({
+          //     movies,
+          //     hold: Search.slice(6, Search.length),
+          //   })
+          // );
+        }
+      }
+    }
+
+    console.log('🔥', movies);
     dispatch({
       type: GET_MOVIES_SUCCESS,
       payload: movies,
@@ -47,6 +92,9 @@ export const getMovies = (q) => async (dispatch) => {
     });
   } catch (err) {
     console.log(err);
+    dispatch({
+      type: GET_MOVIES_FAILURE,
+    });
 
     dispatch({
       type: DISABLE_LOADING,
@@ -64,19 +112,28 @@ export const getMovieDetail = (id) => async (dispatch) => {
   });
 
   try {
-    const { data } = await api.get(`/?i=${id}`);
-    // console.log('🔥', data);
-
-    dispatch({
-      type: DISABLE_LOADING,
+    const { data } = await api.get(`/`, {
+      params: {
+        i: id,
+      },
     });
 
-    dispatch({
-      type: GET_DETAIL_SUCCESS,
-      payload: data,
-    });
+    if (!data.Error) {
+      dispatch({
+        type: GET_DETAIL_SUCCESS,
+        payload: data,
+      });
+
+      dispatch({
+        type: DISABLE_LOADING,
+      });
+    } else {
+      throw new Error();
+    }
   } catch (err) {
-    console.log(err);
+    dispatch({
+      type: GET_DETAIL_FAILURE,
+    });
     dispatch({
       type: DISABLE_LOADING,
     });
@@ -86,26 +143,32 @@ export const getMovieDetail = (id) => async (dispatch) => {
 const initialState = {
   query: null,
   selected: null,
+  error: null,
+  page: null,
   movies: [],
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case GET_MOVIES_REQUEST:
-      const query = action.payload;
-      return { ...state, query };
+      const { query, page } = action.payload;
+      return { ...state, error: null, query, page };
 
     case GET_MOVIES_SUCCESS:
-      console.log(GET_MOVIES_SUCCESS);
       const movies = action.payload;
-      return { ...state, movies: [...movies] };
+
+      return { ...state, error: null, movies: [...state.movies, ...movies] };
+
+    case GET_MOVIES_FAILURE:
+    case GET_DETAIL_FAILURE:
+      return { ...state, error: 'Algo deu errado' };
 
     case GET_DETAIL_SUCCESS:
       const movie = action.payload;
-      return { ...state, selected: movie };
+      return { ...state, error: null, selected: movie };
 
     case RESET_SEARCH:
-      return { movies: [], selected: null, query: null };
+      return { movies: [], error: null, selected: null, query: null };
 
     default:
       return state;
