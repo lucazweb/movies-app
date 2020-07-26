@@ -1,7 +1,13 @@
 import React, { useEffect } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { useFormik } from 'formik';
-import { Wrapper, SearchBox, SearchField } from './home.styled';
+import {
+  Wrapper,
+  SearchBox,
+  SearchField,
+  ButtonSearch,
+  ButtonDanger,
+} from './home.styled';
 import { MovieList, Form, Input } from '../../components';
 import { getMovies, RESET_SEARCH } from '../../store/movies';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +15,7 @@ import { GrFormClose } from 'react-icons/gr';
 
 const HomePage = () => {
   const dispatch = useDispatch();
+  const query = useSelector(({ movies: { query } }) => query);
 
   const formik = useFormik({
     initialValues: {
@@ -16,16 +23,15 @@ const HomePage = () => {
     },
     onSubmit: (values) => {
       const { query } = values;
-
-      dispatch(getMovies(query));
+      if (query) {
+        dispatch(getMovies(query));
+      }
     },
   });
 
-  const query = useSelector(({ movies: { query } }) => query);
-
   useEffect(() => {
     if (query) {
-      formik.setFieldValue('query', query.query);
+      formik.setFieldValue('query', query);
     }
   }, [query]);
 
@@ -57,12 +63,12 @@ const HomePage = () => {
                     value={formik.values.query}
                     placeholder="Busque um filme.."
                   />
-                  {!query && <button type="submit">Buscar</button>}
+                  {!query && <ButtonSearch type="submit">Buscar</ButtonSearch>}
                   {query && (
-                    <button onClick={handleReset}>
+                    <ButtonDanger onClick={handleReset}>
                       <span>Limpar</span>
                       <GrFormClose />
-                    </button>
+                    </ButtonDanger>
                   )}
                 </Form>
               </SearchField>

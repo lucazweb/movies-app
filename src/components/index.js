@@ -1,3 +1,4 @@
+export * from './Common/common.component';
 export * from './MovieList/movie-list.component';
 export * from './MovieList/movie-list.styled';
 export * from './Form/form.component';

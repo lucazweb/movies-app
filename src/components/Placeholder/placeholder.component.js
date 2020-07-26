@@ -4,8 +4,8 @@ import {
   StyledErrorImg,
   Text,
   SmallText,
-  InfoButton,
 } from './placeholder.styled';
+import { ActionButton } from '../Common/common.component';
 import { Row, Col } from 'react-flexbox-grid';
 
 export const Placeholder404 = ({ display, buttonText, action }) => {
@@ -28,9 +28,9 @@ export const Placeholder404 = ({ display, buttonText, action }) => {
       </Col>
       {action && (
         <Col xs={12}>
-          <InfoButton onClick={handleAction}>
+          <ActionButton onClick={handleAction}>
             {buttonText || 'Tentar novamente'}
-          </InfoButton>
+          </ActionButton>
         </Col>
       )}
     </Row>
@@ -57,9 +57,9 @@ export const PlaceholderError = ({ display, buttonText, action }) => {
       </Col>
       {action && (
         <Col xs={12}>
-          <InfoButton onClick={handleAction}>
+          <ActionButton onClick={handleAction}>
             {buttonText || 'Tentar novamente'}
-          </InfoButton>
+          </ActionButton>
         </Col>
       )}
     </Row>
