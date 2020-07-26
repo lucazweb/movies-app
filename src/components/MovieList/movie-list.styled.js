@@ -71,7 +71,7 @@ export const MovieInfo = styled.div`
   position: absolute;
   display: none;
   flex-direction: column;
-  width: 300px;
+  width: 100%;
   height: 360px;
   ${MovieGradient};
   z-index: 900;
@@ -113,3 +113,5 @@ export const InfoButton = styled.button`
     margin-top: 42px;
   }
 `;
+
+export const LoadButton = styled(InfoButton)``;
