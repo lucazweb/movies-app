@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { H2, Span } from '../Typography/typograph.styled';
-import { Breakpoint, Color } from '../../config/constants';
+import { Breakpoint } from '../../config/constants';
 import placeholderImg from '../../assets/monitor_404.svg';
 import placeholderError from '../../assets/error_placeholder.svg';
 
