@@ -4,9 +4,11 @@ import { Breakpoint, Color } from '../../config/constants';
 import { Row } from 'react-flexbox-grid';
 
 export const LargePoster = styled(MoviePoster)`
-  height: 75vh;
+  height: 74vh;
   cursor: default;
-  margin-bottom: 0;
+  @media (max-width: ${Breakpoint.sm}em) {
+    margin-bottom: 15px;
+  }
 `;
 
 export const Title = styled(H1)`

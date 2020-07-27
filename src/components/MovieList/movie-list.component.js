@@ -37,18 +37,16 @@ const MovieListComponent = ({
   };
 
   const handlePagination = (query, page) => {
-    console.log('load more..');
     const newPage = page + 1;
     dispatch(getMovies(query, newPage));
   };
 
-  // useEffect(() => {
-  //   // handle scroll
-  //   if (page > 1 && !loading) {
-  //     console.log('wow');
-  //     window.scrollTo(0, document.body.scrollHeight);
-  //   }
-  // }, [page, loading]);
+  useEffect(() => {
+    // handle scroll
+    if (page > 1 && !loading) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  }, [page, loading]);
 
   if (error) {
     return (

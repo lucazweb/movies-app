@@ -31,6 +31,7 @@ export const DetailPage = ({ match, movie, loading, error }) => {
 
   const handleGoBack = () => {
     history.push('/');
+    setTimeout(() => window.scrollTo(0, 0), 300);
   };
 
   const handleRedirect = () => {
@@ -109,7 +110,6 @@ const mapStateToProps = ({
   movies: { selected: movie, error },
   ui: { loading },
 }) => {
-  console.log(error);
   return {
     movie,
     loading,
