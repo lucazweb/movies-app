@@ -120,7 +120,7 @@ export const getMovieDetail = (id) => async (dispatch) => {
   }
 };
 
-const initialState = {
+export const initialState = {
   query: null,
   selected: null,
   error: null,

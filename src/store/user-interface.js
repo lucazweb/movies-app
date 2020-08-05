@@ -1,7 +1,7 @@
 export const ENABLE_LOADING = 'ENABLE_LOADING';
 export const DISABLE_LOADING = 'DISABLE_LOADING';
 
-const initialState = {
+export const initialState = {
   loading: false,
 };
 
