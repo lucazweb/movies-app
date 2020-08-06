@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { Breakpoint, Color } from '../../config/constants';
 import { RiMovie2Line } from 'react-icons/ri';
 
-export const LogoWrapper = styled.div`
+export const LogoWrapper = styled.div.attrs({
+  'data-testid': 'logo',
+})`
   display: flex;
   width: 70%;
   justify-content: flex-start;

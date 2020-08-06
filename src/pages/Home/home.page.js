@@ -16,7 +16,7 @@ import { GrFormClose } from 'react-icons/gr';
 const HomePage = () => {
   const dispatch = useDispatch();
   const { query, searching, movies } = useSelector(
-    ({ movies: { query, searching, movies } }) => ({
+    ({ movies: { query, searching, movies = [] } }) => ({
       query,
       searching,
       movies,
@@ -67,6 +67,7 @@ const HomePage = () => {
                   <Input
                     className={searching404 ? 'error' : ''}
                     id="query"
+                    data-testid="search-ipt"
                     name="query"
                     type="text"
                     autoComplete="off"
@@ -75,10 +76,17 @@ const HomePage = () => {
                     value={formik.values.query}
                     placeholder="Procure seu Filme"
                   />
-                  {!query && <ButtonSearch type="submit">Buscar</ButtonSearch>}
+                  {!query && (
+                    <ButtonSearch data-testid="search-button" type="submit">
+                      Buscar
+                    </ButtonSearch>
+                  )}
                 </Form>
                 {query && (
-                  <ButtonDanger onClick={handleReset}>
+                  <ButtonDanger
+                    data-testid="reset-button"
+                    onClick={handleReset}
+                  >
                     <span>Limpar</span>
                     <GrFormClose />
                   </ButtonDanger>
